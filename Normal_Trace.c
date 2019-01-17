@@ -32,7 +32,8 @@ void main(void){
     	   		PORTB=0b00000000;
        			__delay_ms(0.4);
        			break;
-       			
+       		
+       		// 左センサ
 			case 0b1110:
 			case 0b1010:
 			case 0b1100:
@@ -43,9 +44,11 @@ void main(void){
 
         		PORTB=0b00000000;
        			__delay_ms(0.8);
-       			course = RIGHT;
+       			//はみ出した場合
+       			course = RIGHT;	// 最後に左センサ反応:右に飛び出し
 				break;
 			
+			// 右センサ
 			case 0b0111:
 			case 0b0101:
 			case 0b0011:
@@ -55,7 +58,7 @@ void main(void){
 				__delay_ms(1.2);
         		PORTB = 0b00000000;
        			__delay_ms(0.8);
-       			course = LEFT;
+       			course = LEFT;	// 最後に右センサ反応:左に飛び出し
 				break;
 
 			//中心センサ 直進
@@ -104,14 +107,7 @@ void main(void){
        			break;
        			
        		default:
-       			//パス
-       			/*
-       			//直進
-				PORTB = 0b10010000;
-				__delay_ms(0.6);
-    	   		PORTB=0b00000000;
-       			__delay_ms(0.4);
-       			*/
+       			//惰行
        			break;
   		}
  	}
