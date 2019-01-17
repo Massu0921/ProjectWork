@@ -1,3 +1,8 @@
+/*
+	Copyright (c) 2019 Massu
+	Released under the MIT license
+	動作電圧 5.0Vがちょうどよい
+*/
 #include<XC.h>
 #include<pic16f84a.h>
 
@@ -27,10 +32,11 @@ void main(void){
 			case 0b0110:
 			case 0b1001:
 				//直進
+
 				PORTB = 0b10010000;
-				__delay_ms(0.6);
+				__delay_ms(0.4);
     	   		PORTB=0b00000000;
-       			__delay_ms(0.4);
+       			__delay_ms(0.3);
        			break;
        		
        		// 左センサ
@@ -40,10 +46,10 @@ void main(void){
 			case 0b1000:
 				//左旋回
 				PORTB = 0b10000000;
-				__delay_ms(1.2);
+				__delay_ms(1.5);
 
         		PORTB=0b00000000;
-       			__delay_ms(0.8);
+       			__delay_ms(0.6);
        			//はみ出した場合
        			course = RIGHT;	// 最後に左センサ反応:右に飛び出し
 				break;
@@ -55,9 +61,9 @@ void main(void){
 			case 0b0001:
 				//右旋回
 				PORTB = 0b00010000;
-				__delay_ms(1.2);
+				__delay_ms(1.5);
         		PORTB = 0b00000000;
-       			__delay_ms(0.8);
+       			__delay_ms(0.6);
        			course = LEFT;	// 最後に右センサ反応:左に飛び出し
 				break;
 
@@ -65,10 +71,10 @@ void main(void){
 			case 0b0100:
 				//左
 				PORTB = 0b10010000;
-				__delay_ms(0.6);
+				__delay_ms(0.2);
 
         		PORTB=0b00000000;
-       			 __delay_ms(0.4);
+       			 __delay_ms(0.15);
        			// 予想
        			course = RIGHT;	//右に飛び出す
 				break;
@@ -76,10 +82,10 @@ void main(void){
 			case 0b0010:
 				//右
 				PORTB = 0b10010000;
-				__delay_ms(0.6);
+				__delay_ms(0.2);
 
         		PORTB=0b00000000;
-       			__delay_ms(0.4);
+       			__delay_ms(0.15);
        			// 予想
        			course = LEFT;	//左に飛び出す
 				break;
@@ -88,16 +94,16 @@ void main(void){
 				//コースアウト
 				if(course == LEFT){	//右旋回
 					PORTB = 0b00010000;
-					__delay_ms(1.6);
+					__delay_ms(1.5);
 
         			PORTB=0b00000000;
-       				__delay_ms(0.4);
+       				__delay_ms(0.5);
     			}else if(course == RIGHT){	//左旋回
     				PORTB = 0b10000000;
-					__delay_ms(1.6);
+					__delay_ms(1.5);
 	
     	    		PORTB=0b00000000;
-       				__delay_ms(0.4);
+       				__delay_ms(0.5);
        			}else if(course == OUT){	//初めは直進
        				PORTB = 0b10010000;
 					__delay_ms(0.6);
