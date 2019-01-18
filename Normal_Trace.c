@@ -46,11 +46,7 @@ void main(void){
 			case 0b1000:
 				//左旋回
 				PORTB = 0b10000000;
-				__delay_ms(0.6);
-				PORTB = 0b10010000;
-				__delay_ms(0.1);
-				PORTB = 0b10000000;
-				__delay_ms(0.6);
+				__delay_ms(1.4);
         		PORTB = 0b00000000;
        			__delay_ms(0.6);
        			//はみ出した場合
@@ -64,11 +60,7 @@ void main(void){
 			case 0b0001:
 				//右旋回
 				PORTB = 0b00010000;
-				__delay_ms(0.6);
-				PORTB = 0b10010000;
-				__delay_ms(0.1);
-				PORTB = 0b00010000;
-				__delay_ms(0.6);
+				__delay_ms(1.4);
         		PORTB = 0b00000000;
        			__delay_ms(0.6);
        			course = LEFT;	// 最後に右センサ反応:左に飛び出し
@@ -110,23 +102,15 @@ void main(void){
 				if(course == LEFT){
 					//右旋回
 					PORTB = 0b00010000;
-					__delay_ms(0.6);
-					PORTB = 0b10010000;
-					__delay_ms(0.1);
-					PORTB = 0b00010000;
-					__delay_ms(0.6);
+					__delay_ms(1.4);
         			PORTB = 0b00000000;
        				__delay_ms(0.6);
     			}else if(course == RIGHT){
     				//左旋回
 					PORTB = 0b10000000;
-					__delay_ms(0.6);
-					PORTB = 0b10010000;
-					__delay_ms(0.1);
-					PORTB = 0b10000000;
-					__delay_ms(0.6);
-       		 		PORTB = 0b00000000;
-      	 			__delay_ms(0.6);
+					__delay_ms(1.4);
+        			PORTB = 0b00000000;
+       				__delay_ms(0.6);
        			}else if(course == OUT){	//初めは直進
        				PORTB = 0b10010000;
 					__delay_ms(0.7);
