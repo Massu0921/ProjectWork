@@ -1,7 +1,7 @@
 /*
-	Copyright (c) 2019 Massu
-	Released under the MIT license
-	動作電圧 5.0Vがちょうどよい
+	動作電圧 5.0V程度が良い
+	空転するためおもり必要
+	右モーター不調
 */
 #include<XC.h>
 #include<pic16f84a.h>
@@ -34,7 +34,7 @@ void main(void){
 				//直進
 
 				PORTB = 0b10010000;
-				__delay_ms(0.4);
+				__delay_ms(0.5);
     	   		PORTB=0b00000000;
        			__delay_ms(0.3);
        			break;
@@ -46,9 +46,12 @@ void main(void){
 			case 0b1000:
 				//左旋回
 				PORTB = 0b10000000;
-				__delay_ms(1.5);
-
-        		PORTB=0b00000000;
+				__delay_ms(0.6);
+				PORTB = 0b10010000;
+				__delay_ms(0.1);
+				PORTB = 0b10000000;
+				__delay_ms(0.6);
+        		PORTB = 0b00000000;
        			__delay_ms(0.6);
        			//はみ出した場合
        			course = RIGHT;	// 最後に左センサ反応:右に飛び出し
@@ -61,17 +64,27 @@ void main(void){
 			case 0b0001:
 				//右旋回
 				PORTB = 0b00010000;
-				__delay_ms(1.5);
+				__delay_ms(0.6);
+				PORTB = 0b10010000;
+				__delay_ms(0.1);
+				PORTB = 0b00010000;
+				__delay_ms(0.6);
         		PORTB = 0b00000000;
        			__delay_ms(0.6);
        			course = LEFT;	// 最後に右センサ反応:左に飛び出し
 				break;
 
-			//中心センサ 直進
+			//中心センサ
 			case 0b0100:
-				//左
+				//左 少し左旋回
+				/*
 				PORTB = 0b10010000;
 				__delay_ms(0.2);
+				*/
+				PORTB = 0b10010000;
+				__delay_ms(0.2);
+				PORTB = 0b10000000;
+				__delay_ms(0.02);
 
         		PORTB=0b00000000;
        			 __delay_ms(0.15);
@@ -80,11 +93,13 @@ void main(void){
 				break;
 				
 			case 0b0010:
-				//右
+				//右 少し右旋回
 				PORTB = 0b10010000;
 				__delay_ms(0.2);
+				PORTB = 0b00010000;
+				__delay_ms(0.02);
 
-        		PORTB=0b00000000;
+        		PORTB = 0b00000000;
        			__delay_ms(0.15);
        			// 予想
        			course = LEFT;	//左に飛び出す
@@ -92,21 +107,29 @@ void main(void){
 				
 			case 0b0000:
 				//コースアウト
-				if(course == LEFT){	//右旋回
+				if(course == LEFT){
+					//右旋回
 					PORTB = 0b00010000;
-					__delay_ms(1.5);
-
-        			PORTB=0b00000000;
-       				__delay_ms(0.5);
-    			}else if(course == RIGHT){	//左旋回
-    				PORTB = 0b10000000;
-					__delay_ms(1.5);
-	
-    	    		PORTB=0b00000000;
-       				__delay_ms(0.5);
+					__delay_ms(0.6);
+					PORTB = 0b10010000;
+					__delay_ms(0.1);
+					PORTB = 0b00010000;
+					__delay_ms(0.6);
+        			PORTB = 0b00000000;
+       				__delay_ms(0.6);
+    			}else if(course == RIGHT){
+    				//左旋回
+					PORTB = 0b10000000;
+					__delay_ms(0.6);
+					PORTB = 0b10010000;
+					__delay_ms(0.1);
+					PORTB = 0b10000000;
+					__delay_ms(0.6);
+       		 		PORTB = 0b00000000;
+      	 			__delay_ms(0.6);
        			}else if(course == OUT){	//初めは直進
        				PORTB = 0b10010000;
-					__delay_ms(0.6);
+					__delay_ms(0.7);
     	   			PORTB=0b00000000;
        				__delay_ms(0.4);
   				}     			
