@@ -1,4 +1,5 @@
 /*
+	高速コース用
 	動作電圧 5.0V程度が良い
 	右モーター不調 -> 電池ボックス後方移動で解決
 
@@ -75,7 +76,6 @@ void main(void){
 				__delay_ms(0.2);
 				PORTB = 0b10000000;
 				__delay_ms(0.02);
-
         		PORTB = 0b00000000;
        			 __delay_ms(0.15);
        			// 予想
@@ -88,7 +88,6 @@ void main(void){
 				__delay_ms(0.2);
 				PORTB = 0b00010000;
 				__delay_ms(0.02);
-
         		PORTB = 0b00000000;
        			__delay_ms(0.15);
        			// 予想
@@ -97,19 +96,19 @@ void main(void){
 				
 			// コースアウト
 			case 0b0000:
-				if(course == LEFT){
+				if(course == LEFT){		// 左飛び出し
 					// 右旋回
 					PORTB = 0b00010000;
 					__delay_ms(1.4);
         			PORTB = 0b00000000;
        				__delay_ms(0.6);
-    			}else if(course == RIGHT){
+    			}else if(course == RIGHT){		// 右飛び出し
     				// 左旋回
 					PORTB = 0b10000000;
 					__delay_ms(1.4);
         			PORTB = 0b00000000;
        				__delay_ms(0.6);
-       			}else if(course == OUT){	//初めは直進
+       			}else if(course == OUT){	// 初めは直進
        				PORTB = 0b10010000;
 					__delay_ms(0.7);
     	   			PORTB = 0b00000000;
